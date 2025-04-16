@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nettoyage CSV</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=1.0">
+</head>
+<body class="bg-light">
+    <div class="container mt-5 p-4 rounded shadow bg-white">
+        <h2 class="text-center text-primary mb-4">Nettoyage Automatique de Données CSV</h2>
+
+        {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+        {% endif %}
+
+
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="formFile" class="form-label">Choisissez votre fichier CSV</label>
+                <input class="form-control" type="file" id="formFile" name="file" required>
+            </div>
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-success">Nettoyer le fichier</button>
+                <!-- Ce bouton n'apparaîtra que si le téléchargement est prêt -->
+                {% if cleaned %}
+                    <a href="{{ url_for('download_file', filename=cleaned) }}" class="btn btn-primary">Télécharger le fichier nettoyé</a>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+</body>
+</html>
